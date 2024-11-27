@@ -113,7 +113,8 @@ a:hover {
 } 
 @media (max-width: 768px) {
     #container {
-        width: 90%; 
+        padding-left: 10px; 
+        padding-right: 10px;
     }
 
     header h1 {
