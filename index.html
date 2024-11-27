@@ -9,14 +9,14 @@
 <body>
     <div id="container">
         <header>
-            <h1>THE BEACH</h1>
+            <h1><a href="https://beach.mori77z.de">THE BEACH</a></h1>
             <h2>by <a href="https://moritzgauss.com">Moritz Gauss</a></h2>
         </header>
         <main>
             <ul class="folder">
                 <li class="folder-item">
                     <span class="folder-icon">🗂️</span>
-                    <span>beach.mori77z.de</span>
+                    beach.mori77z.de
                     <ul class="subfolder">
                         <li>
                             <span class="folder-icon">📁</span>
@@ -38,5 +38,18 @@
             </ul>
         </main>
     </div>
+    <script>
+        document.querySelectorAll(".folder-item > .folder-icon").forEach((icon) => {
+            icon.addEventListener("click", function () {
+                const parent = this.parentNode;
+                parent.classList.toggle("open");
+                const subfolder = parent.querySelector(".subfolder");
+                if (subfolder) {
+                    subfolder.style.display = parent.classList.contains("open") ? "block" : "none";
+                    this.textContent = parent.classList.contains("open") ? "📂" : "🗂️";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
