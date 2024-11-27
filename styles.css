@@ -111,3 +111,16 @@ a:hover {
 .folder-item.open .subfolder {
     display: block;
 } 
+@media (max-width: 600px) {
+    #container {
+        width: 90%; 
+    }
+
+    header h1 {
+        font-size: 3em; 
+    }
+
+    header h2 {
+        font-size: 1em; 
+    }
+}
