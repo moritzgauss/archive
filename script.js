@@ -16,6 +16,10 @@ const video = document.createElement("video");
 video.src = "https://github.com/moritzgauss/archive/raw/refs/heads/main/background%20video-1.mov";
 video.loop = true; // Enable looping
 video.muted = false; // Enable sound
+video.setAttribute("playsinline", "true"); // Prevent fullscreen on mobile
+video.setAttribute("disablepictureinpicture", "true"); // Disable PiP mode
+video.setAttribute("controls", "false"); // Ensure no controls are available
+video.classList.add("background-video"); // Use CSS class for styling
 document.body.appendChild(video);
 
 // Function to start the video
