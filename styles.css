@@ -9,7 +9,8 @@ body {
     min-height: 100vh;
 }
 
-video {
+/* Background video styles */
+video.background-video {
     position: fixed;
     top: 0;
     left: 0;
@@ -17,7 +18,9 @@ video {
     height: 100%;
     object-fit: cover;
     z-index: -1;
- }
+    pointer-events: none; /* Disable interaction */
+    display: none; /* Hidden initially */
+}
 
 #container {
     text-align: center;
