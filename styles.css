@@ -1,0 +1,92 @@
+/* Allgemeines Styling */
+body {
+    font-family: "Times New Roman", serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+#container {
+    text-align: center;
+    border: 1px solid black;
+    padding: 20px;
+}
+
+header h1 {
+    font-family: Helvetica, sans-serif;
+    font-size: 4em;
+    margin: 0;
+}
+
+header h2 {
+    font-family: Helvetica, sans-serif;
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+header h2 a {
+    text-decoration: none;
+    color: black;
+}
+
+/* Ordnerstruktur */
+.folder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.folder-item {
+    text-align: left;
+}
+
+.folder-icon {
+    margin-right: 5px;
+}
+
+.subfolder {
+    list-style: none;
+    margin: 10px 0 0 20px;
+    padding: 0;
+    display: none;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.subfolder li {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    border-top: 1px solid black;
+}
+
+.subfolder li .description {
+    font-family: Helvetica, sans-serif;
+    margin-left: 10px;
+}
+
+.folder-item > .folder-icon {
+    cursor: pointer;
+}
+
+/* Klickbare Links */
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Offen/Zu Symbolwechsel */
+.folder-item.open > .folder-icon {
+    content: "📂";
+}
+
+.folder-item.open .subfolder {
+    display: block;
+}
