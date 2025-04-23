@@ -56,7 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const filtered = repos
                 .filter(repo => {
                     console.log("Überprüfe Repo: ", repo.name); // Debug: Repository-Name ausgeben
-                    return !repo.private && repo.name.startsWith(repoPrefix); // Nur öffentlich und mit Prefix
+                    // Filtern nach Präfix, unabhängig von Groß-/Kleinschreibung
+                    return !repo.private && repo.name.toLowerCase().startsWith(repoPrefix.toLowerCase());
                 })
                 .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));  // Sortierung nach Erstellungsdatum
 
@@ -78,9 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchRepos();  // Startet das Abrufen der Repositories
 });
 </script>
-
-
-
 
   <script>
   // Folder toggle functionality
