@@ -1,114 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Beach</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Beach</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <div id="container">
-        <header>
-            <h1><a href="https://beach.mori77z.de">THE BEACH</a></h1>
-            <h2>by <a href="https://moritzgauss.com">Moritz Gauss</a></h2>
-        </header>
-        <main>
-            <ul class="folder">
-                <li class="folder-item">
-                    <span class="folder-icon">📁 beach.mori77z.de</span>
-                    <ul class="subfolder">
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/digitalboiler">/digitalboiler</a>
-    <span class="description">Digital Boiler Room (01/2025)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/frkchain">/frkchain</a>
-    <span class="description">Food Art & Design Class (01/2025)</span>
-</li>
+  <div id="container">
+    <header>
+      <h1><a href="https://beach.mori77z.de">THE BEACH</a></h1>
+      <h2>by <a href="https://moritzgauss.com">Moritz Gauss</a></h2>
+    </header>
+    <main>
+      <ul class="folder">
+        <li class="folder-item">
+          <span class="folder-icon">📁 beach.mori77z.de/wave.</span>
+          <ul class="subfolder">
+            <!-- dynamisch -->
+          </ul>
+        </li>
+      </ul>
+    </main>
+  </div>
 
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/flashsheet">/flashsheet</a>
-    <span class="description">Tattooed into the Web (11/2024)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/logo-generator-fonts">/logo-generator-fonts</a>
-    <span class="description">Logo Fonts Generator Algorithm (10/2024)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/autumsarfgenerator">/autumsarfgenerator</a>
-    <span class="description">Burberry Pattern Algorithm (10/2024)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/ermaessigt">/ermaessigt</a>
-    <span class="description">Generate your Student ID (09/2024)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/ilove2007">/ilove2007</a>
-    <span class="description">Homage to the first iPhone (08/2024)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/gomorrha">/gomorrha</a>
-    <span class="description">Landing Page (08/2024)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/ipodplayer">/ipodplayer</a>
-    <span class="description">iPod Player (07/2024)</span>
-</li>
-<li>
-    <span class="folder-icon">📁</span>
-    <a href="/starfolio">/starfolio</a>
-    <span class="description">Starfolio (07/2024)</span>
-</li>
-                    </ul>
-                </li>
-            </ul>
-        </main>
-    </div>
   <script>
-      // Folder toggle functionality
-document.querySelectorAll(".folder-item > .folder-icon").forEach((icon) => {
-    icon.addEventListener("click", function () {
-        const parent = this.parentNode;
-        parent.classList.toggle("open");
-        const subfolder = parent.querySelector(".subfolder");
-        if (subfolder) {
-            subfolder.style.display = parent.classList.contains("open") ? "block" : "none";
-            this.textContent = parent.classList.contains("open") ? "📂 beach.mori77z.de" : "📁 beach.mori77z.de";
-        }
-    });
-});
+  const repoPrefix = "wave.";
 
-// Background video functionality
-const video = document.createElement("video");
-video.src = "https://github.com/moritzgauss/archive/raw/refs/heads/main/background%20video-1.mov";
-video.loop = true; // Enable looping
-video.muted = false; // Enable sound
-video.setAttribute("playsinline", "true"); // Prevent fullscreen on mobile
-video.setAttribute("disablepictureinpicture", "true"); // Disable PiP mode
-video.setAttribute("controls", "false"); // Ensure no controls are available
-video.classList.add("background-video"); // Use CSS class for styling
-document.body.appendChild(video);
+  async function fetchRepos() {
+      const response = await fetch("https://api.github.com/users/moritzgauss/repos");
+      const repos = await response.json();
 
-// Function to start the video
-const startVideo = () => {
-    video.style.display = "block"; // Show video
-    video.play().catch((error) => {
-        console.error("Error starting video playback:", error);
-    });
-};
+      const subfolder = document.querySelector(".subfolder");
+      subfolder.innerHTML = ""; // sicherheitshalber leeren
 
-// Add click and scroll event listeners for video playback
-document.body.addEventListener("click", startVideo, { once: true });
-document.body.addEventListener("scroll", startVideo, { once: true });
+      repos
+          .filter(repo => !repo.private && repo.name.startsWith(repoPrefix))
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+          .forEach(repo => {
+              const li = document.createElement("li");
+              li.innerHTML = `
+                  <span class="folder-icon">📁</span>
+                  <a href="/${repo.name}">/${repo.name}</a>
+                  <span class="description">${repo.description || "No description"}</span>
+              `;
+              subfolder.appendChild(li);
+          });
+  }
+
+  fetchRepos();
+  </script>
+
+  <script>
+  // Folder toggle functionality
+  document.querySelectorAll(".folder-item > .folder-icon").forEach((icon) => {
+      icon.addEventListener("click", function () {
+          const parent = this.parentNode;
+          parent.classList.toggle("open");
+          const subfolder = parent.querySelector(".subfolder");
+          if (subfolder) {
+              subfolder.style.display = parent.classList.contains("open") ? "block" : "none";
+              this.textContent = parent.classList.contains("open")
+                ? "📂 beach.mori77z.de/wave."
+                : "📁 beach.mori77z.de/wave.";
+          }
+      });
+  });
+
+  // Background video functionality
+  const video = document.createElement("video");
+  video.src = "https://github.com/moritzgauss/archive/raw/refs/heads/main/background%20video-1.mov";
+  video.loop = true;
+  video.muted = false;
+  video.setAttribute("playsinline", "true");
+  video.setAttribute("disablepictureinpicture", "true");
+  video.setAttribute("controls", "false");
+  video.classList.add("background-video");
+  document.body.appendChild(video);
+
+  const startVideo = () => {
+      video.style.display = "block";
+      video.play().catch((error) => {
+          console.error("Error starting video playback:", error);
+      });
+  };
+
+  document.body.addEventListener("click", startVideo, { once: true });
+  document.body.addEventListener("scroll", startVideo, { once: true });
   </script>
 </body>
 </html>
