@@ -26,38 +26,45 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const repoPrefix = "wave-";
+    const repoPrefix = "wave.";
+
+    async function fetchReadme(owner, repo) {
+        const url = `https://api.github.com/repos/${owner}/${repo}/readme`;
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("README nicht gefunden");
+            const data = await res.json();
+            const decoded = atob(data.content);
+            const firstLine = decoded.split("\n").find(line => line.trim().length > 0);
+            return firstLine || "No description";
+        } catch (err) {
+            return "No description";
+        }
+    }
 
     async function fetchRepos() {
         try {
             const response = await fetch("https://api.github.com/users/moritzgauss/repos");
-            if (!response.ok) {
-                throw new Error("GitHub API Fehler: " + response.status);
-            }
+            if (!response.ok) throw new Error("Fehler beim Laden der Repos");
 
             const repos = await response.json();
-            console.log("Repos geladen:", repos);
-
             const subfolder = document.querySelector(".subfolder");
-            if (!subfolder) {
-                console.error("Subfolder-Element nicht gefunden!");
-                return;
+            if (!subfolder) return;
+
+            const filtered = repos
+                .filter(repo => !repo.private && repo.name.includes(repoPrefix))  // Statt startsWith, auf includes geupdated
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            for (const repo of filtered) {
+                const desc = await fetchReadme("moritzgauss", repo.name);
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <span class="folder-icon">📁</span>
+                    <a href="/${repo.name}">/${repo.name}</a>
+                    <span class="description">${desc}</span>
+                `;
+                subfolder.appendChild(li);
             }
-
-            repos
-                .filter(repo => !repo.private && repo.name.startsWith(repoPrefix))
-                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                .forEach(repo => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `
-                        <span class="folder-icon">📁</span>
-                        <a href="/${repo.name}">/${repo.name}</a>
-                        <span class="description">${repo.description || "No description"}</span>
-                    `;
-                    subfolder.appendChild(li);
-                });
-
-            console.log("Repos mit Prefix erfolgreich hinzugefügt.");
         } catch (error) {
             console.error("Fehler beim Laden der Repos:", error);
         }
