@@ -16,22 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Background video functionality
-    const video = document.getElementById("background-video");
-    video.setAttribute("playsinline", "true");
-    video.setAttribute("disablepictureinpicture", "true");
-    video.removeAttribute("controls"); // deaktiviert Controls sichtbar
-    video.muted = false;
+// Background video functionality
+const video = document.getElementById("background-video");
 
-    const startVideo = () => {
-        video.style.display = "block";
-        video.play().catch((error) => {
-            console.error("Error starting video playback:", error);
-        });
-    };
+const startVideo = () => {
+    video.play().catch((error) => {
+        console.error("Error starting video playback:", error);
+    });
+};
 
-    document.body.addEventListener("click", startVideo, { once: true });
-    document.body.addEventListener("scroll", startVideo, { once: true });
+document.body.addEventListener("click", startVideo, { once: true });
+document.body.addEventListener("scroll", startVideo, { once: true });
 
     async function fetchRepos() {
         try {
