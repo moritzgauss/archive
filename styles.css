@@ -1,4 +1,3 @@
-/* Allgemeines Styling */
 body {
     font-family: "Times New Roman", serif;
     margin: 0;
@@ -7,6 +6,8 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    background-color: white;
+    color: black;
 }
 
 video.background-video {
@@ -18,6 +19,7 @@ video.background-video {
     object-fit: cover;
     z-index: -1;
     display: block;
+    opacity: 0.6;
 }
 
 #container {
@@ -36,7 +38,6 @@ header h1 {
 
 header h1 a {
     text-decoration: none;
-    color: black;
 }
 
 header h1 a:hover {
@@ -51,10 +52,8 @@ header h2 {
 
 header h2 a {
     text-decoration: none;
-    color: black;
 }
 
-/* Ordnerstruktur */
 .folder {
     list-style: none;
     margin: 0;
@@ -100,7 +99,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Offen/Zu Symbolwechsel */
 .folder-item.open > .folder-icon {
     content: "📂";
 }
