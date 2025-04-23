@@ -24,99 +24,12 @@
     </main>
   </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const repoSuffix = ".wave"; // Definiere das Suffix
+  <!-- Video -->
+  <video id="background-video" loop muted controls>
+    <source src="https://github.com/moritzgauss/archive/raw/refs/heads/main/background%20video-1.mov" type="video/mp4">
+    Dein Browser unterstützt das Video-Tag nicht.
+  </video>
 
-    async function fetchReadme(owner, repo) {
-        const url = `https://api.github.com/repos/${owner}/${repo}/readme`;
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error("README nicht gefunden");
-            const data = await res.json();
-            const decoded = atob(data.content);  // Base64-Inhalt dekodieren
-            const firstLine = decoded.split("\n").find(line => line.trim().length > 0); // Die erste Zeile extrahieren
-            return firstLine || "Keine Beschreibung";
-        } catch (err) {
-            return "Keine Beschreibung";
-        }
-    }
-
-    async function fetchRepos() {
-        try {
-            const response = await fetch("https://api.github.com/users/moritzgauss/repos");
-            if (!response.ok) throw new Error("Fehler beim Laden der Repositories");
-
-            const repos = await response.json();
-            console.log(repos); // Debug: Repository-Daten ausgeben
-
-            const subfolder = document.querySelector(".subfolder");
-            if (!subfolder) return;
-
-            const filtered = repos
-                .filter(repo => {
-                    console.log("Überprüfe Repo: ", repo.name); // Debug: Repository-Name ausgeben
-                    // Filtern nach Suffix (am Ende), unabhängig von Groß-/Kleinschreibung
-                    return !repo.private && repo.name.toLowerCase().endsWith(repoSuffix.toLowerCase());
-                })
-                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));  // Sortierung nach Erstellungsdatum
-
-            for (const repo of filtered) {
-                const desc = await fetchReadme("moritzgauss", repo.name);
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <span class="folder-icon">📁</span>
-                    <a href="/${repo.name}">/${repo.name}</a>
-                    <span class="description">${desc}</span>
-                `;
-                subfolder.appendChild(li);
-            }
-        } catch (error) {
-            console.error("Fehler beim Laden der Repositories:", error);
-        }
-    }
-
-    fetchRepos();  // Startet das Abrufen der Repositories
-});
-</script>
-
-
-  <script>
-  // Folder toggle functionality
-  document.querySelectorAll(".folder-item > .folder-icon").forEach((icon) => {
-      icon.addEventListener("click", function () {
-          const parent = this.parentNode;
-          parent.classList.toggle("open");
-          const subfolder = parent.querySelector(".subfolder");
-          if (subfolder) {
-              subfolder.style.display = parent.classList.contains("open") ? "block" : "none";
-              this.textContent = parent.classList.contains("open")
-                ? "📂 beach.mori77z.de/wave."
-                : "📁 beach.mori77z.de/wave.";
-          }
-      });
-  });
-
-  // Background video functionality
-  const video = document.createElement("video");
-  video.src = "https://github.com/moritzgauss/archive/raw/refs/heads/main/background%20video-1.mov";
-  video.loop = true;
-  video.muted = false;
-  video.setAttribute("playsinline", "true");
-  video.setAttribute("disablepictureinpicture", "true");
-  video.setAttribute("controls", "false");
-  video.classList.add("background-video");
-  document.body.appendChild(video);
-
-  const startVideo = () => {
-      video.style.display = "block";
-      video.play().catch((error) => {
-          console.error("Error starting video playback:", error);
-      });
-  };
-
-  document.body.addEventListener("click", startVideo, { once: true });
-  document.body.addEventListener("scroll", startVideo, { once: true });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
