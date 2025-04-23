@@ -26,6 +26,8 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    const repoPrefix = "wave.";
+
     async function fetchRepos() {
         try {
             const response = await fetch("https://api.github.com/users/moritzgauss/repos");
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const repos = await response.json();
-            console.log("Repos geladen:", repos); // Debug-Ausgabe
+            console.log("Repos geladen:", repos);
 
             const subfolder = document.querySelector(".subfolder");
             if (!subfolder) {
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             repos
-                .filter(repo => !repo.private)
+                .filter(repo => !repo.private && repo.name.startsWith(repoPrefix))
                 .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                 .forEach(repo => {
                     const li = document.createElement("li");
@@ -55,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     subfolder.appendChild(li);
                 });
 
-            console.log("Repos erfolgreich hinzugefügt.");
+            console.log("Repos mit Prefix erfolgreich hinzugefügt.");
         } catch (error) {
             console.error("Fehler beim Laden der Repos:", error);
         }
