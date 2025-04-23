@@ -9,7 +9,6 @@ body {
     min-height: 100vh;
 }
 
-/* Background video styles */
 video.background-video {
     position: fixed;
     top: 0;
@@ -18,8 +17,7 @@ video.background-video {
     height: 100%;
     object-fit: cover;
     z-index: -1;
-    pointer-events: none; 
-    display: none; 
+    display: block;
 }
 
 #container {
