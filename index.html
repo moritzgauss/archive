@@ -26,16 +26,16 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const repoPrefix = "wave.";
+    const repoPrefix = "wave."; // Define your prefix here
 
     async function fetchReadme(owner, repo) {
         const url = `https://api.github.com/repos/${owner}/${repo}/readme`;
         try {
             const res = await fetch(url);
-            if (!res.ok) throw new Error("README nicht gefunden");
+            if (!res.ok) throw new Error("README not found");
             const data = await res.json();
-            const decoded = atob(data.content);
-            const firstLine = decoded.split("\n").find(line => line.trim().length > 0);
+            const decoded = atob(data.content);  // Decode base64 content
+            const firstLine = decoded.split("\n").find(line => line.trim().length > 0); // Grab the first line
             return firstLine || "No description";
         } catch (err) {
             return "No description";
@@ -45,15 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchRepos() {
         try {
             const response = await fetch("https://api.github.com/users/moritzgauss/repos");
-            if (!response.ok) throw new Error("Fehler beim Laden der Repos");
+            if (!response.ok) throw new Error("Error loading repositories");
 
             const repos = await response.json();
             const subfolder = document.querySelector(".subfolder");
             if (!subfolder) return;
 
             const filtered = repos
-                .filter(repo => !repo.private && repo.name.includes(repoPrefix))  // Statt startsWith, auf includes geupdated
-                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                .filter(repo => {
+                    // Only include repos that are not private and start with the repoPrefix
+                    return !repo.private && repo.name.startsWith(repoPrefix);
+                })
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));  // Sort by creation date
 
             for (const repo of filtered) {
                 const desc = await fetchReadme("moritzgauss", repo.name);
@@ -66,13 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 subfolder.appendChild(li);
             }
         } catch (error) {
-            console.error("Fehler beim Laden der Repos:", error);
+            console.error("Error loading repositories:", error);
         }
     }
 
-    fetchRepos();
+    fetchRepos();  // Start fetching the repos
 });
 </script>
+
 
 
   <script>
