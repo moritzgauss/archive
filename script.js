@@ -50,7 +50,7 @@ document.body.addEventListener("scroll", startVideo, { once: true });
                 const li = document.createElement("li");
                 li.innerHTML = `
                     <span class="folder-icon">📁</span>
-                    <a href="${repo.name}">/${repo.name}</a>
+                    <a href="/${repo.name}</a>
                     <span class="description">${desc}</span>
                 `;
                 subfolder.appendChild(li);
