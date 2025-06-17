@@ -31,59 +31,37 @@ video.background-video {
 }
 
 .subfolder {
-  position: relative;
-  max-height: 300px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  border-left: 1px solid black; /* linker Border */
-  margin: 10px 0 0 20px;         /* Abstände wie gewünscht */
-  padding-right: 16px;           /* Platz für Fake-Scrollbar rechts */
-  box-sizing: border-box;
+    max-height: 300px;
+    list-style: none;
+    margin: 10px 0 0 20px;
+    display: none;
+    border-left: 1px solid black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right: 10px;
+    box-sizing: border-box;
 }
 
-/* Verstecke native Scrollbar (für Webkit) */
 .subfolder::-webkit-scrollbar {
-  display: none;
+    width: 8px;
 }
 
-/* Für Firefox (Scrollbar transparent machen) */
+.subfolder::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.subfolder::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 4px;
+}
+
+.subfolder::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
 .subfolder {
-  scrollbar-width: none; /* Firefox */
-}
-
-/* ul im Subfolder ohne extra Abstände */
-.subfolder > ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* Fake Scrollbar - Container */
-.fake-scrollbar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 8px;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* Der „Daumen“ der Scrollbar */
-.fake-scrollbar-thumb {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: black;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-
-.fake-scrollbar:hover .fake-scrollbar-thumb {
-  background: #444;
+    scrollbar-color: black rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin;
 }
 
 
