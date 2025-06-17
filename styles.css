@@ -36,8 +36,34 @@ video.background-video {
     margin: 10px 0 0 20px;
     display: none;
     border-left: 1px solid black;
-    overflow-y: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right: 10px;
+    box-sizing: border-box;
 }
+
+.subfolder::-webkit-scrollbar {
+    width: 8px;
+}
+
+.subfolder::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.subfolder::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 4px;
+}
+
+.subfolder::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+.subfolder {
+    scrollbar-color: black rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin;
+}
+
 
 header h1 {
     font-family: Helvetica, Arial, sans-serif;
