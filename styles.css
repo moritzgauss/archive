@@ -32,6 +32,10 @@ video.background-video {
 
 .subfolder-list {
     max-height: 600px;
+    list-style: none;
+    margin: 10px 0 0 20px;
+    display: none;
+    border-left: 1px solid black;
     overflow-y: auto;
 }
 
@@ -72,14 +76,6 @@ header h2 a {
 .folder-icon {
     margin-right: 5px;
     cursor: pointer;
-}
-
-.subfolder {
-    list-style: none;
-    margin: 10px 0 0 20px;
-    display: none;
-    border-left: 1px solid black;
-    border-top: 1px solid black;
 }
 
 .subfolder li {
