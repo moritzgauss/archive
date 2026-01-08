@@ -97,12 +97,12 @@ header h2 a {
 
 .folder-item {
     text-align: left;
-    text-decoration: underline;
 }
 
 .folder-icon {
     margin-right: 5px;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .subfolder li {
