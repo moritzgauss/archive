@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (subfolder) {
                 subfolder.style.display = parent.classList.contains("open") ? "block" : "none";
                 this.textContent = parent.classList.contains("open")
-                    ? "📂 beach.mori77z.de/"
-                    : "📁 beach.mori77z.de/";
+                    ? "📂 moritzgauss.github.io/"
+                    : "📁 moritzgauss.github.io/";
             }
         });
     });
